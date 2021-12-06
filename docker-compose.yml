@@ -1,0 +1,23 @@
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: "gorry"
+      MYSQL_USER: "gorry"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_PASSWORD: "gorry"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1" ]
+      timeout: 5s
+      retries: 3
+  gorry:
+    restart: always
+    image: gorry
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "9999:9999"
+    links:
+      - "db:gorry.db"
