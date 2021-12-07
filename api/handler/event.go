@@ -3,11 +3,11 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"richardoctoey/interview-gorry/common"
-	"richardoctoey/interview-gorry/event"
+	evt "richardoctoey/interview-gorry/event"
 )
 
 func CreateEvent(c *gin.Context) {
-	event := event.Event{}
+	event := evt.Event{}
 	if err := c.BindJSON(&event); err != nil {
 		common.Error(c, err)
 		return
@@ -20,7 +20,7 @@ func CreateEvent(c *gin.Context) {
 }
 
 func GetEvent(c *gin.Context) {
-	listEvent, err := event.GetEvents()
+	listEvent, err := evt.GetEvents()
 	if err != nil {
 		common.Error(c, err)
 		return
