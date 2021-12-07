@@ -1,7 +1,7 @@
 all:
 	build
 build:
-	docker build -t xapiens .
+	docker build -t gorry .
 stop:
 	docker-compose stop
 run:
