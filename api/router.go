@@ -11,7 +11,7 @@ func StartApi(url string) {
 	r.GET("/event/get_info", handler.GetEvent)
 	//r.POST("/event/ticket/create", handler.TicketCreate)
 
-	//r.POST("/location/create", handler.LocationCreate)
+	r.POST("/location/create", handler.CreateLocation)
 
 	//r.POST("/transaction/purchase", handler.TransactionPurchase)
 	//r.GET("/transaction/get_info", handler.TransactionGetInfo)
