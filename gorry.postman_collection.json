@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "1676ea2c-92ba-4cc5-82c7-dde6d9ef5587",
+		"name": "gorry",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Event",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9999/event/get_info?uuid=ffc0cc89-948f-47eb-8951-b36253ef0094",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"event",
+						"get_info"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "ffc0cc89-948f-47eb-8951-b36253ef0094"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Event Ku\",\n    \"location\": \"bb1a5305-7f5d-43ec-8e65-df6a2f03314a\",\n    \"start_time\": \"2021-12-08T10:00:00Z\",\n    \"end_time\": \"2021-12-08T11:00:00Z\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9999/event/create",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"event",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Location",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Bandung\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9999/location/create",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"location",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Ticket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"event\": \"a8edb3e2-90aa-435b-ad6f-5980f6b9150a\",\n    \"type\": \"Ticket Gold\",\n    \"quota\": 5,\n    \"price\": 2000\n}"
+				},
+				"url": {
+					"raw": "localhost:9999/event/ticket/create",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"event",
+						"ticket",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase Ticket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_name\": \"Richie\",\n    \"detail\": [\n        {\n            \"ticket\": \"7c23cb8d-c35e-4ec6-9678-0d2689bd612e\",\n            \"qty\": 1\n        },\n        {\n            \"ticket\": \"640d2b64-71b5-4d40-aac7-b9b8210863bd\",\n            \"qty\": 1\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "localhost:9999/transaction/purchase",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"transaction",
+						"purchase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transaction Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9999/transaction/get_info",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"transaction",
+						"get_info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
