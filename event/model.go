@@ -2,8 +2,8 @@ package event
 
 import (
 	"errors"
-	"richardoctoey/interview-gorry/common"
 	"github.com/google/uuid"
+	"richardoctoey/interview-gorry/common"
 	"strings"
 	"time"
 )
@@ -52,6 +52,16 @@ func (u Event) AutoMigrate() error {
 	return common.GetDb().AutoMigrate(&Event{})
 }
 
+func isOverlapSchedule(location string, startTime time.Time, endTime time.Time) bool {
+	var total int64
+	common.GetDb().Model(&Event{}).Where("location = ? AND start_time < ? AND end_time > ?",
+		location, endTime, startTime).Count(&total)
+	if total >= 1 {
+		return true
+	}
+	return false
+}
+
 func (u Event) Validate() error {
 	if strings.TrimSpace(u.Location) == "" {
 		return errors.New("location cannot be empty")
@@ -61,6 +71,12 @@ func (u Event) Validate() error {
 	}
 	if u.EndTime.IsZero() {
 		return errors.New("end_time cannot be empty")
+	}
+	if u.EndTime.Unix() < u.StartTime.Unix() {
+		return errors.New("end_time smaller than start_time")
+	}
+	if isOverlapSchedule(u.Location, u.StartTime, u.EndTime) {
+		return errors.New("There's another event in this period")
 	}
 	return nil
 }
