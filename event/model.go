@@ -4,6 +4,7 @@ import (
 	"errors"
 	"richardoctoey/interview-gorry/common"
 	"github.com/google/uuid"
+	"strings"
 	"time"
 )
 
@@ -22,6 +23,9 @@ func (u Event) TableName() string {
 func (u *Event) Save() (error) {
 	if u.UUID == "" {
 		u.UUID = uuid.New().String()
+		if err := u.Validate(); err != nil  {
+			return err
+		}
 		return common.GetDb().Create(&u).Error
 	}
 
@@ -29,6 +33,9 @@ func (u *Event) Save() (error) {
 	common.GetDb().Model(&Event{}).Where("uuid = ?", u.UUID).Count(&count)
 	if count != 1 {
 		return errors.New("Not exists")
+	}
+	if err := u.Validate(); err != nil {
+		return err
 	}
 	return common.GetDb().Where("uuid = ?", u.UUID).Save(&u).Error
 }
@@ -46,6 +53,15 @@ func (u Event) AutoMigrate() error {
 }
 
 func (u Event) Validate() error {
+	if strings.TrimSpace(u.Location) == "" {
+		return errors.New("location cannot be empty")
+	}
+	if u.StartTime.IsZero() {
+		return errors.New("start_time cannot be empty")
+	}
+	if u.EndTime.IsZero() {
+		return errors.New("end_time cannot be empty")
+	}
 	return nil
 }
 
