@@ -40,26 +40,8 @@ func (u *Event) Save() (error) {
 	return common.GetDb().Where("uuid = ?", u.UUID).Save(&u).Error
 }
 
-func GetEvents() ([]Event, error) {
-	var result []Event
-	if err := common.GetDb().Model(&Event{}).Scan(&result).Error; err != nil {
-		return nil, err
-	}
-	return result, nil
-}
-
 func (u Event) AutoMigrate() error {
 	return common.GetDb().AutoMigrate(&Event{})
-}
-
-func isOverlapSchedule(location string, startTime time.Time, endTime time.Time) bool {
-	var total int64
-	common.GetDb().Model(&Event{}).Where("location = ? AND start_time < ? AND end_time > ?",
-		location, endTime, startTime).Count(&total)
-	if total >= 1 {
-		return true
-	}
-	return false
 }
 
 func (u Event) Validate() error {
@@ -81,3 +63,24 @@ func (u Event) Validate() error {
 	return nil
 }
 
+func isOverlapSchedule(location string, startTime time.Time, endTime time.Time) bool {
+	var total int64
+	common.GetDb().Model(&Event{}).Where("location = ? AND start_time < ? AND end_time > ?",
+		location, endTime, startTime).Count(&total)
+	if total >= 1 {
+		return true
+	}
+	return false
+}
+
+func GetEvents(uuid string) ([]Event, error) {
+	var result []Event
+	find := common.GetDb().Model(&Event{})
+	if uuid != "" {
+		find = find.Where("uuid = ?", uuid)
+	}
+	if err := find.Scan(&result).Error; err != nil {
+		return nil, err
+	}
+	return result, nil
+}

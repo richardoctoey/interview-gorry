@@ -8,6 +8,7 @@ import (
 	"richardoctoey/interview-gorry/api"
 	"richardoctoey/interview-gorry/common"
 	"richardoctoey/interview-gorry/event"
+	"richardoctoey/interview-gorry/event/ticket"
 	"richardoctoey/interview-gorry/location"
 	"syscall"
 )
@@ -23,8 +24,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	common.AutoMigrate(&event.Event{})
-	common.AutoMigrate(&location.Location{})
+	common.AutoMigrate(&event.Event{}, &location.Location{}, &ticket.Ticket{})
 
 	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)

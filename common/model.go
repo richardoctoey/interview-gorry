@@ -5,9 +5,11 @@ type Model interface {
 	Validate() error
 }
 
-func AutoMigrate(m Model) {
-	if err := m.AutoMigrate(); err != nil {
-		panic(err)
+func AutoMigrate(ms ...Model) {
+	for _, m := range ms {
+		if err := m.AutoMigrate(); err != nil {
+			panic(err)
+		}
 	}
 }
 
