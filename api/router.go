@@ -3,7 +3,6 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"richardoctoey/interview-gorry/api/handler"
-	"richardoctoey/interview-gorry/api/handler/transaction"
 )
 
 func StartApi(url string) {
@@ -14,7 +13,7 @@ func StartApi(url string) {
 
 	r.POST("/location/create", handler.CreateLocation)
 
-	r.POST("/transaction/purchase", transaction.TransactionPurchase)
-	r.GET("/transaction/get_info", transaction.TransactionInfo)
+	r.POST("/transaction/purchase", handler.TransactionPurchase)
+	r.GET("/transaction/get_info", handler.TransactionInfo)
 	r.Run(url)
 }

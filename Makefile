@@ -1,7 +1,7 @@
 all:
 	build
 build:
-	docker build -t gorry .
+	docker build -t gorry-richard-oey .
 stop:
 	docker-compose stop
 run:

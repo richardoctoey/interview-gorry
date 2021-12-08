@@ -1,5 +1,5 @@
 services:
-  db:
+  db-richard-oey:
     image: mysql:5.7
     restart: always
     environment:
@@ -11,13 +11,13 @@ services:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1" ]
       timeout: 5s
       retries: 3
-  gorry:
+  gorry-richard-oey:
     restart: always
-    image: gorry
+    image: gorry-richard-oey
     depends_on:
-      db:
+      db-richard-oey:
         condition: service_healthy
     ports:
       - "9999:9999"
     links:
-      - "db:gorry.db"
+      - "db-richard-oey:gorry-richard-oey.db"

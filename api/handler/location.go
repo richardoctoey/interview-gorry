@@ -3,11 +3,11 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"richardoctoey/interview-gorry/common"
-	"richardoctoey/interview-gorry/location"
+	"richardoctoey/interview-gorry/event"
 )
 
 func CreateLocation(c *gin.Context) {
-	loc := location.Location{}
+	loc := event.Location{}
 	if err := c.BindJSON(&loc); err != nil {
 		common.Error(c, err)
 		return

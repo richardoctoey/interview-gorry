@@ -9,10 +9,10 @@ import (
 )
 
 type Ticket struct {
-	UUID string `gorm:"primaryKey,column:uuid" json:"uuid,omitempty"`
-	Event string `gorm:"column:event" json:"event"`
-	Type string `gorm:"column:type" json:"type"`
-	Quota int `gorm:"column:quota" json:"quota"`
+	UUID  string  `gorm:"primaryKey,column:uuid" json:"uuid,omitempty"`
+	Event string  `gorm:"column:event" json:"event"`
+	Type  string  `gorm:"column:type" json:"type"`
+	Quota int     `gorm:"column:quota" json:"quota"`
 	Price float64 `gorm:"column:price" json:"price"`
 }
 
@@ -20,8 +20,8 @@ func (u Ticket) TableName() string {
 	return "ticket"
 }
 
-func (u *Ticket) Save() (error) {
-	if err := u.Validate(); err != nil  {
+func (u *Ticket) Save() error {
+	if err := u.Validate(); err != nil {
 		return err
 	}
 	if u.UUID == "" {
@@ -67,8 +67,7 @@ func eventNotExist(uuid string) bool {
 
 func findByEventUuid(uuid string) ([]Ticket, error) {
 	var result []Ticket
-	if err := common.GetDb().Model(&Ticket{}).Where("event = ?", uuid).Scan(&result).Error;
-		err != nil && err != gorm.ErrRecordNotFound {
+	if err := common.GetDb().Model(&Ticket{}).Where("event = ?", uuid).Scan(&result).Error; err != nil && err != gorm.ErrRecordNotFound {
 		return nil, err
 	}
 	return result, nil

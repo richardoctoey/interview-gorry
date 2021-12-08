@@ -14,7 +14,7 @@ type Event struct {
 	Location  string    `gorm:"column:location" json:"location"`
 	StartTime time.Time `gorm:"column:start_time" json:"start_time"`
 	EndTime   time.Time `gorm:"column:end_time" json:"end_time"`
-	Ticket    []Ticket    `gorm:"-" json:"tickets,omitempty"`
+	Ticket    []Ticket  `gorm:"-" json:"tickets,omitempty"`
 }
 
 func (u Event) TableName() string {
@@ -57,7 +57,10 @@ func (u Event) Validate() error {
 		return errors.New("end_time smaller than start_time")
 	}
 	if isOverlapSchedule(u.Location, u.StartTime, u.EndTime) {
-		return errors.New("There's another event in this period")
+		return errors.New("there's another event in this period")
+	}
+	if !findLocationByUuid(u.Location) {
+		return errors.New("no location data")
 	}
 	return nil
 }

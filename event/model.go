@@ -1,4 +1,4 @@
-package location
+package event
 
 import (
 	"errors"
@@ -12,7 +12,7 @@ type Location struct {
 	Name string `gorm:"column:name" json:"name"`
 }
 
-func (u *Location) Save() (error) {
+func (u *Location) Save() error {
 	if u.UUID == "" {
 		if findLocationByName(u.Name) {
 			return errors.New("Name already exists")
