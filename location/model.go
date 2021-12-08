@@ -22,7 +22,7 @@ func (u *Location) Save() (error) {
 	}
 
 	if !findLocationByUuid(u.UUID) {
-		return errors.New("Not exists")
+		return errors.New("not exists")
 	}
 	return common.GetDb().Where("uuid = ?", u.UUID).Save(&u).Error
 }

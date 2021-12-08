@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"richardoctoey/interview-gorry/common"
 	evt "richardoctoey/interview-gorry/event"
-	"richardoctoey/interview-gorry/event/ticket"
 )
 
 func CreateEvent(c *gin.Context) {
@@ -21,7 +20,7 @@ func CreateEvent(c *gin.Context) {
 }
 
 func GetEvent(c *gin.Context) {
-	listEvent, err := evt.GetEvents("")
+	listEvent, err := evt.GetEvents(c.Query("uuid"))
 	if err != nil {
 		common.Error(c, err)
 		return
@@ -30,7 +29,7 @@ func GetEvent(c *gin.Context) {
 }
 
 func CreateTicket(c *gin.Context) {
-	tickt := ticket.Ticket{}
+	tickt := evt.Ticket{}
 	if err := c.BindJSON(&tickt); err != nil {
 		common.Error(c, err)
 		return
